@@ -1,5 +1,7 @@
 # react-ez-table
 
+# npm i react-ez-table
+
 dataHeader 는  [{render: 'string', value: 'string'}, {}...] 형식으로 주어져야합니다.
 단순히 화면에 보여지는 용도로만 쓰이는 render 가 있습니다.
 value 는 기능을 위해 존재하며 . key 또한 value 로 설정되어 있어 유니크해야합니다.
