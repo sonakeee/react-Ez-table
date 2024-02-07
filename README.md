@@ -1,70 +1,113 @@
-# Getting Started with Create React App
+# react-ez-table
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+dataHeader 는  [{render: 'string', value: 'string'}, {}...] 형식으로 주어져야합니다.
+단순히 화면에 보여지는 용도로만 쓰이는 render 가 있습니다.
+value 는 기능을 위해 존재하며 . key 또한 value 로 설정되어 있어 유니크해야합니다.
 
-## Available Scripts
+dataItems 는
+header의 value를 key 로 가지고있는 객체로 구성되어있으며 배열형태여야 합니다.
+실제 데이터구조는 [{headerKey1: value, headerKey2: value2, ...} , .... ] 의 형태로 주어져야합니다.
 
-In the project directory, you can run:
+예시 
+````jsx
 
-### `npm start`
+const Example = () => {
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    const headers = [
+        {
+            render: '테이블헤더에 보여지는 텍스트1',
+            value:  'one'
+        },
+        {
+            render: '테이블헤더에 보여지는 텍스트2',
+            value:  'two'
+        },
+        {
+            render: '테이블헤더에 보여지는 텍스트3',
+            value:  'three'
+        },
+        {
+            render: '테이블헤더에 보여지는 텍스트4',
+            value:  'four'
+        },
+        {
+            render: '테이블헤더에 보여지는 텍스트5',
+            value:  'five'
+        },
+    ]
+    
+    const items = [
+        {
+            'one' : 1,
+            'two': 2,
+            'three': 3,
+            'four': 4,
+            'five': 5,
+        },
+        {
+            'one' : 6,
+            'two': 7,
+            'three': 8,
+            'four': 9,
+            'five': 10,
+        },
+        {
+            'one' : 11,
+            'two': 12,
+            'three': 13,
+            'four': 14,
+            'five': 15,
+        },
+        {
+            'one' : 16,
+            'two': 17,
+            'three': 18,
+            'four': 19,
+            'five': 20,
+        },
+    ]
+    
+    
+    
+    return (
+        <EzTable
+            dataHeaders={headers}
+            dataItems={items}
+        />
+    )
+}
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+````
 
-### `npm test`
+이 테이블엔 기본적으로 주어지는 색상으로 black 과 white 가 있습니다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+ 색상 오버라이딩을 쉽게 하기 위해 userColor 와 userTextColor 가 지원됩니다.
+ userColor 는 cell 에 mouse hover 를  진행했을때 색에 영향을 줍니다.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+ expand 는 기본적으로 false 상태이며 children 이라는 특별한 props 로 구성되어있어
+ 자신이 원하는 jsx 를 넣을 수 있습니다.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+````jsx
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+const Example = () => {
+    
+    return (
+        <EzTable
+            dataHeaders={headers}
+            dataItems={items}
+            
+            expand={true}
+        >
+            <div>
+                <input type="text" placeholder="Enter text" />
+                <button>Submit</button>
+            </div>
+        </EzTable>
+    )
+}
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+````
