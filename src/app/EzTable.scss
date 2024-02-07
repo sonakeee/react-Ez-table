@@ -1,0 +1,78 @@
+$black: rgb(46, 44, 44);
+$white: rgb(255, 255, 255);
+$blue: rgb(63, 149, 241);
+
+
+
+@mixin table-color($backColor, $textColor) {
+  background: $backColor;
+  color: $textColor;
+
+  &:hover {
+    background: lighten($backColor, 10%);
+  }
+
+  &:active {
+    background: darken($backColor, 10%);
+  }
+
+
+}
+
+.table {
+  width: 100%;
+  border-radius: 0.5em;
+  cursor: default;
+
+  &.black {
+    @include table-color($black, $white)
+  }
+  &.white {
+    @include table-color($white, $black)
+  }
+  &.blue {
+    @include table-color($blue, $black)
+  }
+
+
+
+}
+
+
+.table__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table__body {
+  display: flex;
+  flex-direction: column;
+}
+
+.table__cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &__box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+
+.table__content {
+  display: flex;
+}
+
+.table__expand__cell {
+  display: flex;
+}
+
+
+.table__footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+}
