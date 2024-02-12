@@ -1,61 +1,64 @@
 import './App.scss';
-import EzTable from "./app/EzTable";
+import {useState} from "react";
+// import EzTable from "./app/EzTable";
 
 function App() {
 
-    const dataHeaders = [
-        {
-            render: '보이는모습 하나 ',
-            value:  '하나'
-        },
-        {
-            render: '보이는모습 둘',
-            value:  '둘'
-        },
-        {
-            render: '보이는모습 셋 ',
-            value:  '셋'
-        },
-        {
-            render: '보이는모습 넷',
-            value:  '넷'
-        },
-        {
-            render: '보이는모습 다섯',
-            value:  '다섯'
-        },
-    ]
-
-    const dataItems = [
-        {
-            '하나' : 1,
-            '둘': 2,
-            '셋': 3,
-            '넷': 4,
-            '다섯': 5,
-        },
-        {
-            '하나' : 6,
-            '둘': 7,
-            '셋': 8,
-            '넷': 9,
-            '다섯': 10,
-        },
-        {
-            '하나' : 11,
-            '둘': 12,
-            '셋': 13,
-            '넷': 14,
-            '다섯': 15,
-        },
-        {
-            '하나' : 16,
-            '둘': 17,
-            '셋': 18,
-            '넷': 19,
-            '다섯': 20,
-        },
-    ]
+    // const dataHeaders = [
+    //     {
+    //         render: '보이는모습 하나 ',
+    //         value:  '하나'
+    //     },
+    //     {
+    //         render: '보이는모습 둘',
+    //         value:  '둘'
+    //     },
+    //     {
+    //         render: '보이는모습 셋 ',
+    //         value:  '셋'
+    //     },
+    //     {
+    //         render: '보이는모습 넷',
+    //         value:  '넷'
+    //     },
+    //     {
+    //         render: '보이는모습 다섯',
+    //         value:  '다섯'
+    //     },
+    // ]
+    //
+    // const dataItems = [
+    //     {
+    //         '하나' : 1,
+    //         '둘': 2,
+    //         '셋': 3,
+    //         '넷': 4,
+    //         '다섯': 5,
+    //     },
+    //     {
+    //         '하나' : 6,
+    //         '둘': 7,
+    //         '셋': 8,
+    //         '넷': 9,
+    //         '다섯': 10,
+    //     },
+    //     {
+    //         '하나' : 11,
+    //         '둘': 12,
+    //         '셋': 13,
+    //         '넷': 14,
+    //         '다섯': 15,
+    //     },
+    //     {
+    //         '하나' : 16,
+    //         '둘': 17,
+    //         '셋': 18,
+    //         '넷': 19,
+    //         '다섯': 20,
+    //     },
+    // ]
+    // const userColor = 'rgba(63, 149, 200, 1)'
+    // const userTextColor = 'rgba(0, 0, 0, 1)'
 
 
     // dataHeader 는  [{render: 'string', value: 'string'}, {}...] 형식으로 주어져야합니다.
@@ -76,34 +79,39 @@ function App() {
     // expand 는 기본적으로 false 상태이며 children 이라는 특별한 props 로 구성되어있어
     // 자신이 원하는 jsx 를 넣을 수 있습니다.
     // 예시 코드를 보여주면 좋을듯..
+    //
 
-
-    const userColor = 'rgba(63, 149, 200, 1)'
-    const userTextColor = 'rgba(0, 0, 0, 1)'
-
+    const [inputValue, setInputValue] = useState('')
+    const handleInput = (e) => {
+        console.log(e.target.value)
+        setInputValue(e.target.value)
+    }
     return (
         <div className="App">
-            <div style={{width: '50%', margin: '100px auto 0'}}>
-                <EzTable
-                    dataHeaders={dataHeaders}
-                    dataItems={dataItems}
 
-
-                    defaultColor={'black'}
-
-
-                    userColor={userColor}
-                    userTextColor={userTextColor}
-
-                    expand={true}
-
-                >
-                    <div>
-                        <input type="text" placeholder="Enter text" />
-                        <button>Submit</button>
-                    </div>
-                </EzTable>
-            </div>
+            <input type="text"
+                     onChange={handleInput}
+            />
+            <div>{inputValue}</div>
+            {/*<div style={{width: '50%', margin: '100px auto 0'}}>*/}
+            {/*    <EzTable*/}
+            {/*        dataHeaders={dataHeaders}*/}
+            {/*        dataItems={dataItems}*/}
+            
+            {/*        defaultColor={'black'}*/}
+            
+            {/*        userColor={userColor}*/}
+            {/*        userTextColor={userTextColor}*/}
+            
+            {/*        expand={true}*/}
+            
+            {/*    >*/}
+            {/*        <div>*/}
+            {/*            <input type="text" placeholder="Enter text" />*/}
+            {/*            <button>Submit</button>*/}
+            {/*        </div>*/}
+            {/*    </EzTable>*/}
+            {/*</div>*/}
 
         </div>
     );
