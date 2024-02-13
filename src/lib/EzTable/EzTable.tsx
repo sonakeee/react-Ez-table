@@ -2,7 +2,6 @@ import './EzTable.scss'
 import React, {useState} from "react";
 import {EzTableProps} from "../../types/types";
 
-
 const EzTable = ({
                      dataHeaders,
                      dataItems,

@@ -23,11 +23,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = __importStar(require("react"));
-require("./TestButton.css");
-var TestButton = function () {
-    var _a = (0, react_1.useState)(''), inputValue = _a[0], setInputValue = _a[1];
-    var handleInput = function (e) {
+const react_1 = __importStar(require("react"));
+require("./TestButton.scss");
+const TestButton = () => {
+    const [inputValue, setInputValue] = (0, react_1.useState)('');
+    const handleInput = (e) => {
         console.log(e.target.value);
         setInputValue(e.target.value);
     };

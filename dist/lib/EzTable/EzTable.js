@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -33,65 +22,67 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-require("./EzTable.css");
-var react_1 = __importStar(require("react"));
-var EzTable = function (_a) {
-    var dataHeaders = _a.dataHeaders, dataItems = _a.dataItems, _b = _a.defaultColor, defaultColor = _b === void 0 ? 'black' : _b, _c = _a.userTextColor, userTextColor = _c === void 0 ? '' : _c, _d = _a.userColor, userColor = _d === void 0 ? '' : _d, _e = _a.expand, expand = _e === void 0 ? false : _e, children = _a.children;
-    var rgbaRegex = /^rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*(?:,\s*(?:0|1)?(?:\.\d+)?)?\s*\)$/;
-    var overrideUserColor = function (color, type) {
-        var _a;
+const react_1 = __importStar(require("react"));
+if (process.env.REACT_APP_CSS_TYPE === 'css') {
+    require('./EzTable.css');
+}
+else {
+    require('./EzTable.scss');
+}
+const EzTable = ({ dataHeaders, dataItems, defaultColor = 'black', userTextColor = '', userColor = '', expand = false, children }) => {
+    const rgbaRegex = /^rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*(?:,\s*(?:0|1)?(?:\.\d+)?)?\s*\)$/;
+    const overrideUserColor = (color, type) => {
         if (rgbaRegex.test(color)) {
-            return _a = {}, _a[type] = color, _a;
+            return { [type]: color };
         }
         else {
             return {};
         }
     };
-    var checkUserColor = function () {
-        var overUserColor = overrideUserColor(userColor, 'background');
-        var overUserTextColor = overrideUserColor(userTextColor, 'color');
-        return __assign(__assign({}, overUserColor), overUserTextColor);
+    const checkUserColor = () => {
+        const overUserColor = overrideUserColor(userColor, 'background');
+        const overUserTextColor = overrideUserColor(userTextColor, 'color');
+        return Object.assign(Object.assign({}, overUserColor), overUserTextColor);
     };
-    var tableClassName = "table ".concat(defaultColor);
-    var customColorVariation = function (color, percent, value) {
-        if (value === void 0) { value = '-'; }
-        var matchResult = color.match(/(\d+)/g);
-        var r = matchResult[0], g = matchResult[1], b = matchResult[2], a = matchResult[3];
-        var newR, newG, newB;
-        switch (value) {
-            case '+':
-                newR = Math.max(0, parseInt(r, 10) + percent);
-                newG = Math.max(0, parseInt(g, 10) + percent);
-                newB = Math.max(0, parseInt(b, 10) + percent);
-                break;
-            default:
-                newR = Math.max(0, parseInt(r, 10) - percent);
-                newG = Math.max(0, parseInt(g, 10) - percent);
-                newB = Math.max(0, parseInt(b, 10) - percent);
-                break;
+    const tableClassName = `table ${defaultColor}`;
+    const changeGridCss = () => {
+        return {
+            display: 'grid',
+            gridTemplateColumns: `repeat(${dataHeaders.length}, 1fr)`,
+            gridGap: '10px',
+        };
+    };
+    const customColorVariation = (color, percent, value = '-') => {
+        if (color !== '') {
+            const matchResult = color.match(/(\d+)/g);
+            const [r, g, b, a] = matchResult;
+            let newR, newG, newB;
+            switch (value) {
+                case '+':
+                    newR = Math.max(0, parseInt(r, 10) + percent);
+                    newG = Math.max(0, parseInt(g, 10) + percent);
+                    newB = Math.max(0, parseInt(b, 10) + percent);
+                    break;
+                default:
+                    newR = Math.max(0, parseInt(r, 10) - percent);
+                    newG = Math.max(0, parseInt(g, 10) - percent);
+                    newB = Math.max(0, parseInt(b, 10) - percent);
+                    break;
+            }
+            return `rgba(${newR}, ${newG}, ${newB}, ${a})`;
         }
-        return "rgba(".concat(newR, ", ").concat(newG, ", ").concat(newB, ", ").concat(a, ")");
     };
-    var userHoverStyle = function (index) {
+    const userHoverStyle = (index) => {
         if (hoveredCells[index]) {
             return { background: customColorVariation(userColor, 10) };
         }
         return {};
     };
-    var _f = (0, react_1.useState)(new Array(dataItems.length).fill(false)), hoveredCells = _f[0], setHoveredCells = _f[1];
-    var handleHover = function (index) {
-        var newHoveredCells = __spreadArray([], hoveredCells, true);
-        newHoveredCells.forEach(function (ele, idx) {
+    const [hoveredCells, setHoveredCells] = (0, react_1.useState)(new Array(dataItems.length).fill(false));
+    const handleHover = (index) => {
+        const newHoveredCells = [...hoveredCells];
+        newHoveredCells.forEach((ele, idx) => {
             newHoveredCells[idx] = false;
             if (index === idx) {
                 newHoveredCells[index] = true;
@@ -99,33 +90,36 @@ var EzTable = function (_a) {
         });
         setHoveredCells(newHoveredCells);
     };
-    var handleLeave = function (index) {
-        var newHoveredCells = __spreadArray([], hoveredCells, true);
-        newHoveredCells.forEach(function (ele, idx) {
+    const handleLeave = (index) => {
+        const newHoveredCells = [...hoveredCells];
+        newHoveredCells.forEach((ele, idx) => {
             newHoveredCells[index] = false;
         });
         setHoveredCells(newHoveredCells);
     };
-    var _g = (0, react_1.useState)(new Array(dataItems.length).fill(false)), expandCell = _g[0], setExpandCell = _g[1];
-    var handleExpandCell = function (index) {
+    const [expandCell, setExpandCell] = (0, react_1.useState)(new Array(dataItems.length).fill(false));
+    const [expandViewAllValue, setExpandViewAllValue] = (0, react_1.useState)(new Array(dataItems.length).fill({ whiteSpace: 'nowrap' }));
+    const handleExpandCell = (index) => {
         if (expand) {
-            var newExpandCell = __spreadArray([], expandCell, true);
+            const newExpandCell = [...expandCell];
             newExpandCell[index] = !newExpandCell[index];
             setExpandCell(newExpandCell);
+            const newViewValue = [...expandViewAllValue];
+            if (expandViewAllValue[index].whiteSpace === 'wrap') {
+                newViewValue[index] = Object.assign(Object.assign({}, newViewValue[index]), { whiteSpace: 'nowrap' });
+            }
+            else {
+                newViewValue[index] = Object.assign(Object.assign({}, newViewValue[index]), { whiteSpace: 'wrap' });
+            }
+            setExpandViewAllValue(newViewValue);
         }
     };
     return (react_1.default.createElement("section", { className: tableClassName, style: checkUserColor() },
-        react_1.default.createElement("header", { className: 'table__header' }, dataHeaders.map(function (header, index) { return (react_1.default.createElement("div", { key: header.value }, header.render)); })),
-        react_1.default.createElement("main", { className: 'table__body' }, dataItems.map(function (item, index) { return (react_1.default.createElement("div", { key: index, className: "table__cell", onMouseEnter: function () { return handleHover(index); }, onMouseLeave: function () { return handleLeave(index); }, style: userHoverStyle(index), onClick: function () { return handleExpandCell(index); } },
-            react_1.default.createElement("div", { className: 'table__cell__box' }, Object.entries(item).map(function (_a) {
-                var key = _a[0], value = _a[1];
-                return (react_1.default.createElement("div", { key: key, className: "table__content" },
-                    react_1.default.createElement(react_1.default.Fragment, null,
-                        key,
-                        ": ",
-                        value)));
-            })),
-            expandCell[index] ? react_1.default.createElement("div", { className: 'table__expand__cell' }, children) : null)); })),
+        react_1.default.createElement("header", { className: 'table__header', style: changeGridCss() }, dataHeaders.map((header, index) => (react_1.default.createElement("div", { key: header.value }, header.render)))),
+        react_1.default.createElement("main", { className: 'table__body' }, dataItems.map((item, index) => (react_1.default.createElement("div", { key: index, className: "table__cell", onMouseEnter: () => handleHover(index), onMouseLeave: () => handleLeave(index), style: userHoverStyle(index), onClick: () => handleExpandCell(index) },
+            react_1.default.createElement("div", { className: 'table__cell__box', style: changeGridCss() }, Object.entries(item).map(([key, value]) => (react_1.default.createElement("div", { key: key, className: "table__content", style: expandViewAllValue[index] },
+                react_1.default.createElement(react_1.default.Fragment, null, value))))),
+            expandCell[index] ? react_1.default.createElement("div", { className: 'table__expand__cell' }, children) : null)))),
         react_1.default.createElement("footer", { className: 'table__footer' }, "foooterererer")));
 };
 exports.default = EzTable;

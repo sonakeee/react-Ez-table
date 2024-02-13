@@ -1,32 +1,22 @@
 .table {
   width: 100%;
   border-radius: 0.5em;
-  cursor: default; }
+  cursor: default;
+  padding: 10px; }
   .table.black {
     background: #2e2c2c;
     color: white; }
-    .table.black:hover {
-      background: #484545; }
-    .table.black:active {
-      background: #141313; }
   .table.white {
     background: white;
     color: #2e2c2c; }
-    .table.white:hover {
-      background: white; }
-    .table.white:active {
-      background: #e6e6e6; }
   .table.blue {
     background: #3f95f1;
     color: #2e2c2c; }
-    .table.blue:hover {
-      background: #6faff4; }
-    .table.blue:active {
-      background: #117bec; }
 
 .table__header {
   display: flex;
-  justify-content: space-between; }
+  justify-content: space-between;
+  padding: 10px 0 20px; }
 
 .table__body {
   display: flex;
@@ -35,14 +25,38 @@
 .table__cell {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; }
+  justify-content: space-between;
+  padding: 10px 0 10px; }
+  .table__cell.black {
+    background: #2e2c2c;
+    color: white; }
+    .table__cell.black:hover {
+      background: #484545; }
+    .table__cell.black:active {
+      background: #141313; }
+  .table__cell.white {
+    background: white;
+    color: #2e2c2c; }
+    .table__cell.white:hover {
+      background: white; }
+    .table__cell.white:active {
+      background: #e6e6e6; }
+  .table__cell.blue {
+    background: #3f95f1;
+    color: #2e2c2c; }
+    .table__cell.blue:hover {
+      background: #6faff4; }
+    .table__cell.blue:active {
+      background: #117bec; }
   .table__cell__box {
     display: flex;
     flex-direction: row;
     justify-content: space-between; }
 
 .table__content {
-  display: flex; }
+  display: flex;
+  white-space: nowrap;
+  overflow: hidden; }
 
 .table__expand__cell {
   display: flex; }

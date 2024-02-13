@@ -1,2 +1,3 @@
 import TestButton from "./TestButton/TestButton";
-export { TestButton };
+import EzTable from './EzTable/EzTable';
+export { TestButton, EzTable };
