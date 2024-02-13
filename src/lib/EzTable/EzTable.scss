@@ -7,22 +7,20 @@ $blue: rgb(63, 149, 241);
 @mixin table-color($backColor, $textColor) {
   background: $backColor;
   color: $textColor;
-
-  &:hover {
-    background: lighten($backColor, 10%);
-  }
-
-  &:active {
-    background: darken($backColor, 10%);
-  }
-
-
+  //&:hover {
+  //  background: lighten($backColor, 10%);
+  //}
+  //
+  //&:active {
+  //  background: darken($backColor, 10%);
+  //}
 }
 
 .table {
   width: 100%;
   border-radius: 0.5em;
   cursor: default;
+  padding: 10px;
 
   &.black {
     @include table-color($black, $white)
@@ -33,15 +31,13 @@ $blue: rgb(63, 149, 241);
   &.blue {
     @include table-color($blue, $black)
   }
-
-
-
 }
 
 
 .table__header {
   display: flex;
   justify-content: space-between;
+  padding: 10px 0 20px;
 }
 
 .table__body {
@@ -49,10 +45,37 @@ $blue: rgb(63, 149, 241);
   flex-direction: column;
 }
 
+
+@mixin table-cell-color($backColor, $textColor) {
+  background: $backColor;
+  color: $textColor;
+
+  &:hover {
+    background: lighten($backColor, 10%);
+  }
+
+  &:active {
+    background: darken($backColor, 10%);
+  }
+
+}
+
+
 .table__cell {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 10px 0 10px;
+
+  &.black {
+    @include table-cell-color($black, $white)
+  }
+  &.white {
+    @include table-cell-color($white, $black)
+  }
+  &.blue {
+    @include table-cell-color($blue, $black)
+  }
 
   &__box {
     display: flex;
@@ -64,6 +87,8 @@ $blue: rgb(63, 149, 241);
 
 .table__content {
   display: flex;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .table__expand__cell {
